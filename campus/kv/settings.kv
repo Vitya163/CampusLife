@@ -1,0 +1,149 @@
+<SettingsScreen>:
+    name: 'settings'
+    BoxLayout:
+        orientation: 'vertical'
+        Banner:
+            tex: app.grad_header
+            radii: [0, 0, dp(30), dp(30)]
+            size_hint_y: None
+            height: dp(120)
+            padding: dp(16), dp(30), dp(20), dp(16)
+            spacing: dp(14)
+            BackBtn:
+                pos_hint: {'center_y': 0.5}
+                on_release: app.go('feed', 'right')
+            BoxLayout:
+                orientation: 'vertical'
+                Txt:
+                    text: 'Настройки'
+                    color: 1, 1, 1, 1
+                    bold: True
+                    font_size: '22sp'
+                Txt:
+                    text: 'Профиль, уведомления, сервер'
+                    color: 1, 1, 1, 0.85
+                    font_size: '13sp'
+        ScrollView:
+            bar_width: 0
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(20), dp(18), dp(20), dp(24)
+                spacing: dp(10)
+                Sec:
+                    text: 'ПРОФИЛЬ (ПОДСТАВЛЯЕТСЯ В ЗАПИСЬ)'
+                StyledInput:
+                    id: p_name
+                    hint_text: 'Имя и фамилия'
+                    on_text: root.save_profile()
+                StyledInput:
+                    id: p_cls
+                    hint_text: 'Класс / группа, например 8Б'
+                    on_text: root.save_profile()
+                Sec:
+                    text: 'УВЕДОМЛЕНИЯ'
+                Panel:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: 0, dp(6)
+                    SettingRow:
+                        id: r_n_enabled
+                        key: 'n_enabled'
+                        text: 'Включить уведомления'
+                    SettingRow:
+                        id: r_n_reg_open
+                        key: 'n_reg_open'
+                        text: 'Начался набор на событие'
+                    SettingRow:
+                        id: r_n_soon
+                        key: 'n_soon'
+                        text: 'Скоро начнётся / началось'
+                    SettingRow:
+                        id: r_soon_all
+                        key: 'soon_all'
+                        text: 'О скором старте — все события'
+                    SettingRow:
+                        id: r_n_new
+                        key: 'n_new'
+                        text: 'Новые мероприятия'
+                    SettingRow:
+                        id: r_n_remind
+                        key: 'n_remind'
+                        text: 'Мои напоминания'
+                    SettingRow:
+                        id: r_n_system
+                        key: 'n_system'
+                        text: 'Системные (шторка телефона)'
+                Txt:
+                    text: 'Сообщать о старте:'
+                    font_size: '14sp'
+                    size_hint_y: None
+                    height: dp(26)
+                ScrollView:
+                    size_hint_y: None
+                    height: dp(46)
+                    do_scroll_y: False
+                    bar_width: 0
+                    BoxLayout:
+                        id: lead_row
+                        size_hint_x: None
+                        width: self.minimum_width
+                        padding: 0, dp(5)
+                        spacing: dp(8)
+                RBtn:
+                    text: 'Показать тестовое уведомление'
+                    size_hint_y: None
+                    height: dp(46)
+                    font_size: '14sp'
+                    bg: 0.90, 0.89, 1, 1
+                    color: app.accent
+                    on_release: app.test_notify()
+                Sec:
+                    text: 'ОРГАНИЗАТОР И СЕРВЕР'
+                Panel:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: 0, dp(6)
+                    SettingRow:
+                        id: r_organizer
+                        key: 'organizer'
+                        text: 'Режим организатора (проверка билетов)'
+                StyledInput:
+                    id: server
+                    hint_text: 'Адрес сервера, например http://192.168.1.10:8000'
+                    font_size: '14sp'
+                    on_text: root.save_server()
+                Txt:
+                    text: 'Без сервера запись хранится только на этом телефоне. С сервером запись общая: места, дубли и отметки на входе считаются по-настоящему.'
+                    font_size: '12sp'
+                    color: 0.55, 0.55, 0.66, 1
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                RBtn:
+                    text: 'Проверить связь с сервером'
+                    size_hint_y: None
+                    height: dp(46)
+                    font_size: '14sp'
+                    on_release: root.test_server()
+                RBtn:
+                    text: 'Очистить уведомления'
+                    size_hint_y: None
+                    height: dp(46)
+                    font_size: '14sp'
+                    bg: 0.93, 0.93, 0.96, 1
+                    color: 0.38, 0.38, 0.48, 1
+                    on_release: app.clear_notifs()
+                Widget:
+                    size_hint_y: None
+                    height: dp(30)
+                Txt:
+                    text: 'Компания: FENIX\nИздатели: Прошин Виктор Антонович,\nРахматов Рустамджон Шарифджонович'
+                    halign: 'center'
+                    font_size: '12sp'
+                    color: 0.45, 0.45, 0.55, 0.45
+                    size_hint_y: None
+                    height: dp(64)

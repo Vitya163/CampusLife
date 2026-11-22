@@ -1,0 +1,192 @@
+<EventCard>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: dp(238)
+    on_release: app.open_event(root.ev)
+    Banner:
+        tex: root.cover_tex
+        deco: root.deco
+        radii: [dp(20), dp(20), 0, 0]
+        size_hint_y: None
+        height: dp(100)
+        padding: dp(12)
+        Pill:
+            text: root.category
+            bg: 1, 1, 1, 0.94
+            color: root.cat_color
+            pos_hint: {'top': 1}
+        Widget:
+        Badge:
+            day: root.day
+            month: root.month
+            pos_hint: {'top': 1}
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(16), dp(12), dp(16), dp(12)
+        spacing: dp(4)
+        Txt:
+            text: root.title_text
+            font_size: '18sp'
+            bold: True
+            shorten: True
+            shorten_from: 'right'
+            size_hint_y: None
+            height: dp(28)
+        Txt:
+            text: root.meta
+            font_size: '13sp'
+            color: 0.45, 0.45, 0.56, 1
+            shorten: True
+            shorten_from: 'right'
+            size_hint_y: None
+            height: dp(20)
+        Widget:
+        BoxLayout:
+            size_hint_y: None
+            height: dp(34)
+            spacing: dp(8)
+            Txt:
+                text: root.count_text
+                font_size: '13sp'
+                bold: True
+                color: app.accent
+                shorten: True
+                shorten_from: 'right'
+            RBtn:
+                text: 'В избранном' if root.fav else 'В избранное'
+                font_size: '12sp'
+                size_hint_x: None
+                width: dp(120)
+                radius: [dp(17)]
+                bg: (0.90, 0.89, 1, 1) if root.fav else (0.94, 0.94, 0.97, 1)
+                color: app.accent if root.fav else (0.40, 0.40, 0.50, 1)
+                on_release: root.toggle_fav()
+
+<FeedScreen>:
+    name: 'feed'
+    BoxLayout:
+        orientation: 'vertical'
+        Banner:
+            orientation: 'vertical'
+            tex: app.grad_header
+            radii: [0, 0, dp(30), dp(30)]
+            size_hint_y: None
+            height: dp(200)
+            padding: dp(20), dp(30), dp(20), dp(18)
+            spacing: dp(4)
+            FloatLayout:
+                id: head
+                size_hint_y: None
+                height: dp(42)
+                Txt:
+                    text: 'CampusLife'
+                    color: 1, 1, 1, 1
+                    bold: True
+                    font_size: '28sp'
+                    size_hint: None, None
+                    size: head.width - dp(104), head.height
+                    pos: head.x, head.y
+                HeadBtn:
+                    kind: 'scan'
+                    pos: head.right - dp(94), head.y
+                    on_release: app.go('scan')
+                HeadBtn:
+                    kind: 'bell'
+                    badge: app.unread
+                    pos: head.right - dp(42), head.y
+                    on_release: app.go('notifs')
+            Txt:
+                id: subtitle
+                text: ''
+                color: 1, 1, 1, 0.85
+                font_size: '14sp'
+                size_hint_y: None
+                height: dp(22)
+            Widget:
+            BoxLayout:
+                size_hint_y: None
+                height: dp(50)
+                padding: dp(16), 0, dp(10), 0
+                spacing: dp(10)
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(25)]
+                Icon:
+                    kind: 'search'
+                    col: 0.55, 0.55, 0.68, 1
+                    size_hint: None, None
+                    size: dp(20), dp(20)
+                    pos_hint: {'center_y': 0.5}
+                TextInput:
+                    id: search
+                    hint_text: 'Поиск по названию'
+                    multiline: False
+                    background_normal: ''
+                    background_active: ''
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0.10, 0.10, 0.16, 1
+                    hint_text_color: 0.62, 0.62, 0.72, 1
+                    cursor_color: app.accent
+                    font_size: '16sp'
+                    padding: 0, dp(15), 0, 0
+                    on_text: root.refresh()
+        ScrollView:
+            size_hint_y: None
+            height: dp(52)
+            do_scroll_y: False
+            bar_width: 0
+            BoxLayout:
+                id: cat_row
+                size_hint_x: None
+                width: self.minimum_width
+                padding: dp(20), dp(8)
+                spacing: dp(8)
+        ScrollView:
+            size_hint_y: None
+            height: dp(44)
+            do_scroll_y: False
+            bar_width: 0
+            BoxLayout:
+                id: when_row
+                size_hint_x: None
+                width: self.minimum_width
+                padding: dp(20), dp(4), dp(20), dp(8)
+                spacing: dp(8)
+        ScrollView:
+            bar_width: 0
+            GridLayout:
+                id: box
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(20), dp(4), dp(20), dp(24)
+                spacing: dp(16)
+        NavBar:
+            NavTab:
+                id: tab_all
+                kind: 'feed'
+                text: 'Лента'
+                active: True
+                on_release: root.set_mode('all')
+            NavTab:
+                id: tab_fav
+                kind: 'star'
+                text: 'Избранное'
+                on_release: root.set_mode('fav')
+            NavTab:
+                id: tab_my
+                kind: 'check'
+                text: 'Записи'
+                on_release: root.set_mode('my')
+            NavTab:
+                kind: 'add'
+                text: 'Создать'
+                on_release: app.go('create')
+            NavTab:
+                kind: 'gear'
+                text: 'Настройки'
+                on_release: app.go('settings')

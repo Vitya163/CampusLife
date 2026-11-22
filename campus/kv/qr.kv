@@ -1,0 +1,101 @@
+<QRScreen>:
+    name: 'qr'
+    BoxLayout:
+        orientation: 'vertical'
+        Banner:
+            tex: app.grad_header
+            radii: [0, 0, dp(30), dp(30)]
+            size_hint_y: None
+            height: dp(120)
+            padding: dp(16), dp(30), dp(20), dp(16)
+            spacing: dp(14)
+            BackBtn:
+                pos_hint: {'center_y': 0.5}
+                on_release: app.go('detail', 'right')
+            BoxLayout:
+                orientation: 'vertical'
+                Txt:
+                    id: head
+                    text: 'QR-код'
+                    color: 1, 1, 1, 1
+                    bold: True
+                    font_size: '22sp'
+                Txt:
+                    text: 'Покажите на экране или распечатайте'
+                    color: 1, 1, 1, 0.85
+                    font_size: '13sp'
+        ScrollView:
+            bar_width: 0
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(20), dp(18), dp(20), dp(20)
+                spacing: dp(14)
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(44)
+                    spacing: dp(10)
+                    RBtn:
+                        id: b_event
+                        text: 'Плакат события'
+                        font_size: '14sp'
+                        on_release: root.show(root.ev, 'event')
+                    RBtn:
+                        id: b_ticket
+                        text: 'Мой билет'
+                        font_size: '14sp'
+                        on_release: root.show(root.ev, 'ticket')
+                BoxLayout:
+                    id: poster
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(470)
+                    padding: dp(20)
+                    spacing: dp(8)
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Txt:
+                        id: p_title
+                        halign: 'center'
+                        font_size: '20sp'
+                        bold: True
+                        max_lines: 2
+                        color: 0.05, 0.05, 0.1, 1
+                        size_hint_y: None
+                        height: dp(58)
+                    Txt:
+                        id: p_sub
+                        halign: 'center'
+                        font_size: '13sp'
+                        color: 0.35, 0.35, 0.45, 1
+                        size_hint_y: None
+                        height: dp(36)
+                    QRWidget:
+                        id: qr
+                        size_hint: None, None
+                        size: dp(280), dp(280)
+                        pos_hint: {'center_x': 0.5}
+                    Txt:
+                        id: p_foot
+                        halign: 'center'
+                        font_size: '12sp'
+                        color: 0.35, 0.35, 0.45, 1
+                        size_hint_y: None
+                        height: dp(30)
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(50)
+                    spacing: dp(10)
+                    RBtn:
+                        text: 'Распечатать'
+                        on_release: root.export(True)
+                    RBtn:
+                        text: 'Сохранить PNG'
+                        bg: 0.90, 0.89, 1, 1
+                        color: app.accent
+                        on_release: root.export(False)

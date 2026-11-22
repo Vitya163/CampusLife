@@ -1,0 +1,43 @@
+<NotifScreen>:
+    name: 'notifs'
+    BoxLayout:
+        orientation: 'vertical'
+        Banner:
+            tex: app.grad_header
+            radii: [0, 0, dp(30), dp(30)]
+            size_hint_y: None
+            height: dp(120)
+            padding: dp(16), dp(30), dp(20), dp(16)
+            spacing: dp(14)
+            BackBtn:
+                pos_hint: {'center_y': 0.5}
+                on_release: app.go('feed', 'right')
+            BoxLayout:
+                orientation: 'vertical'
+                Txt:
+                    text: 'Уведомления'
+                    color: 1, 1, 1, 1
+                    bold: True
+                    font_size: '22sp'
+                Txt:
+                    text: 'Набор, старты и напоминания'
+                    color: 1, 1, 1, 0.85
+                    font_size: '13sp'
+            RBtn:
+                text: 'Очистить'
+                size_hint: None, None
+                size: dp(90), dp(36)
+                font_size: '13sp'
+                radius: [dp(18)]
+                bg: 1, 1, 1, 0.25
+                pos_hint: {'center_y': 0.5}
+                on_release: app.clear_notifs()
+        ScrollView:
+            bar_width: 0
+            GridLayout:
+                id: box
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(20), dp(18), dp(20), dp(24)
+                spacing: dp(12)

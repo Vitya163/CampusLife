@@ -1,0 +1,5 @@
+kivy>=2.2
+qrcode
+numpy
+opencv-python
+plyer
